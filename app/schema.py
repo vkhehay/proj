@@ -10,6 +10,11 @@ class UserCreate(BaseModel):
     password: str
 
 
+class UserUpdate(BaseModel):
+    phone_number: int | None
+    password: str
+
+
 class UserResponse(UserCreate):
     id: int
     created_at: datetime

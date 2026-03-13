@@ -11,6 +11,7 @@ User = models.User
 get_db = database.get_db
 UserCreate = schema.UserCreate
 UserResponse = schema.UserResponse
+UserUpdate = schema.UserUpdate
 UserOut = schema.UserOut
 hash_password = hashing.hash_password
 
@@ -23,7 +24,7 @@ router = APIRouter(
 @router.post('/', status_code=status.HTTP_201_CREATED, response_model=UserResponse)
 def create_user(user: UserCreate, db: Session = Depends(get_db)):
     user_data = user.dict()
-    user_data["password"] = hash_password(user.password)
+    # user_data["password"] = hash_password(user.password)
 
     new_user = User(**user_data)
     db.add(new_user)
@@ -34,7 +35,7 @@ def create_user(user: UserCreate, db: Session = Depends(get_db)):
 
 
 @router.put('/{id}', status_code=status.HTTP_202_ACCEPTED, response_model=UserOut)
-def update_user(user_id: int, user: UserCreate, db: Session = Depends(get_db)):
+def update_user(user_id: int, user: UserUpdate, db: Session = Depends(get_db)):
     query = (db.query(User).filter(User.id == user_id))
     user_new = user.dict()
     user_new["password"] = hash_password(user.password)

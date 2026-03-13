@@ -7,6 +7,7 @@ from sqlalchemy.sql.sqltypes import TIMESTAMP
 from typing import List, Optional
 from datetime import datetime
 
+
 class Post(Base):
     __tablename__ = 'posts'
     __table_args__ = {"extend_existing": True}
