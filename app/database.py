@@ -5,7 +5,7 @@ from .config import settings
 
 Base = declarative_base()
 
-DATABASE_URL = f'postgresql://{settings.db_username}:{settings.db_password}@{settings.db_url}:{settings.db_port}/{settings.db_name}'
+DATABASE_URL = f'postgresql://{settings.db_username}:{settings.db_password}@{settings.db_host}:{settings.db_port}/{settings.db_name}'
 
 engine = create_engine(DATABASE_URL)
 SessionLocal = sessionmaker(autocommit=False, bind=engine)
@@ -16,7 +16,7 @@ def get_db():
         yield db
 
 
-check = settings.db_url
+check = settings.db_host
 
 if __name__ == '__main__':
     print(check)

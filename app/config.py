@@ -7,7 +7,6 @@ from pydantic_settings import BaseSettings, SettingsConfigDict
 # ENV_PATH = BASE_DIR / ".env"
 
 class Settings(BaseSettings):
-    db_url: str
     db_port: int
     db_name: str
     db_password: str
@@ -15,6 +14,11 @@ class Settings(BaseSettings):
     secret_key: str
     algorithm: str
     access_token_exp_min: int
+    db_host: str = "db"
+
+    postgres_user: str
+    postgres_password: str
+    postgres_db: str
 
     model_config = SettingsConfigDict(env_file=".env")
     # model_config = SettingsConfigDict(env_file=str(ENV_PATH))
