@@ -9,7 +9,7 @@ from .database import get_db, SessionLocal
 from .models import User
 
 SECRET_KEY = settings.secret_key
-ALGORYTHM = settings.algorithm
+ALGORITHM = settings.algorithm
 EXP_TIME = settings.access_token_exp_min
 
 oath2_schema = OAuth2PasswordBearer(tokenUrl='login')
@@ -20,13 +20,13 @@ def create_access_token(data: dict, ):
 
     expired_time = datetime.now(timezone.utc) + timedelta(minutes=EXP_TIME)
     to_encode.update({"exp": expired_time})
-    token = jwt.encode(to_encode, SECRET_KEY, algorithm=ALGORYTHM)
+    token = jwt.encode(to_encode, SECRET_KEY, algorithm=ALGORITHM)
     return token
 
 
 def verify_access_token(token: str, credentials_exception):
     try:
-        payload = jwt.decode(token, SECRET_KEY, algorithms=[ALGORYTHM])
+        payload = jwt.decode(token, SECRET_KEY, algorithms=[ALGORITHM])
         user_id = payload.get("user_id")
         if user_id is None:
             raise credentials_exception
