@@ -3,25 +3,26 @@ services:
     api:
 #      build: . #take image from local folder
       image: sloppynetworks/fastapi #download docker image from dockerhub site for example sloppynetworks/fastapi
+      container_name: prod_api
       ports:
         - "80:8000"
 #      command: uvicorn app.main:app --host 0.0.0.0 --port 8000 '''no need to repeat with CMD command in Dockerfile'''
 #      env_file:
 #        - ./.env
       environment:
-        - DB_HOSTNAME=${DATABASE_HOSTNAME}
-        - DB_PORT=${DATABASE_PORT}
-        - DB_PASSWORD=${DATABASE_PASSWORD}
-        - DB_NAME=${DATABASE_NAME}
+        - DATABASE_HOSTNAME=${DATABASE_HOSTNAME}
+        - DATABASE_PORT=${DATABASE_PORT}
+        - DATABASE_PASSWORD=${DATABASE_PASSWORD}
+        - DATABASE_NAME=${DATABASE_NAME}
         - SECRET_KEY=${SECRET_KEY}
-        - ALGORYTHM=${ALGORYTHM}
+        - ALGORITHM=${ALGORITHM}
         - ACCESS_TOKEN_EXP_MIN=${ACCESS_TOKEN_EXPIRE-MINUTE}
       depends_on:
-        - db
+        - postgres
 
-    db:
+    postgres:
       image: postgres:16 #download postgres 16 image from dockerhub
-      container_name: proj_db
+      container_name: prod_db
       environment:
         - POSTGRES_PASSWORD=${DATABASE_PASSWORD}
         - POSTGRES_DB=${DATABASE_NAME}

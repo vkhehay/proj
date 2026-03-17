@@ -18,8 +18,8 @@ oath2_schema = OAuth2PasswordBearer(tokenUrl='login')
 def create_access_token(data: dict, ):
     to_encode = data.copy()
 
-    exprire = datetime.now(timezone.utc) + timedelta(minutes=EXP_TIME)
-    to_encode.update({"exp": exprire})
+    expired_time = datetime.now(timezone.utc) + timedelta(minutes=EXP_TIME)
+    to_encode.update({"exp": expired_time})
     token = jwt.encode(to_encode, SECRET_KEY, algorithm=ALGORYTHM)
     return token
 
@@ -50,4 +50,3 @@ def get_current_user(token: str = Depends(oath2_schema), db: SessionLocal = Depe
                .first())  # Дополнительная проверка на наличие юзера  в базе
 
     return user_id.id  # Возвращаем id по атрибуту из ORM int(id)
-

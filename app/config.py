@@ -14,7 +14,7 @@ class Settings(BaseSettings):
     secret_key: str
     algorithm: str
     access_token_exp_min: int
-    db_host: str = "db"
+    db_host: str  # = "db"
 
     postgres_user: str
     postgres_password: str
@@ -25,4 +25,3 @@ class Settings(BaseSettings):
 
 
 settings = Settings()
-

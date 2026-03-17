@@ -58,14 +58,15 @@ def post(db: Session = Depends(get_db),
 
 
 # @router.get('/{id}', status_code=status.HTTP_202_ACCEPTED, response_model=PostResponse)
-@router.get('/{id}', status_code=status.HTTP_202_ACCEPTED, response_model=PostVote)
-def get_id(id: int, db: Session = Depends(get_db),
+@router.get('/{post_id}', status_code=status.HTTP_202_ACCEPTED, response_model=PostVote)
+# router path/{post_id} should be corresponded with argument in function get_id(post_id)
+def get_id(post_id: int, db: Session = Depends(get_db),
            current_user: int = Depends(get_current_user)):
-    # post_query, _ = find_post(id, db, current_user)
+    # post_query, _ = find_post(post_id, db, current_user)
     query = (db.query(Post, func.count(Vote.post_id).label("votes"))
              .join(Vote, Vote.post_id == Post.id, isouter=True)
              .group_by(Post.id))
-    post_query = query.filter(Post.id == id).first()
+    post_query = query.filter(Post.id == post_id).first()
     print(post_query)
     if post_query is None:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail='Post not found')
@@ -75,7 +76,8 @@ def get_id(id: int, db: Session = Depends(get_db),
     # return post_query.first()
 
 
-@router.delete('/{id}', status_code=status.HTTP_204_NO_CONTENT)
+@router.delete('/{post_id}', status_code=status.HTTP_204_NO_CONTENT)
+# router path/{post_id} should be corresponded with argument in function delete_post(post_id)
 def delete_post(post_id: int, db: Session = Depends(get_db),
                 current_user: int = Depends(get_current_user)):
     post_query, db_session = find_post(post_id, db, current_user)
@@ -84,20 +86,21 @@ def delete_post(post_id: int, db: Session = Depends(get_db),
     return {"message": f"post {id} was deleted"}
 
 
-@router.put('/{id}', status_code=status.HTTP_202_ACCEPTED, response_model=PostResponse)
+@router.put('/{post_id}', status_code=status.HTTP_202_ACCEPTED, response_model=PostResponse)
+# router path/{post_id} should be corresponded with argument in function updated_post(post_id)
 def update_post(post_id: int, post: PostCreate, db: Session = Depends(get_db),
                 current_user: int = Depends(get_current_user)):
     post_query, db_session = find_post(post_id, db, current_user)
-    post_query.update(post.dict(), synchronize_session=False)
+    post_query.update(post.model_dump(), synchronize_session=False)
     db_session.commit()
     check_result, _ = find_post(post_id, db, current_user)
     return check_result.first()
 
 
 @router.post('/', status_code=status.HTTP_201_CREATED, response_model=PostResponse)
-def create_post(post: PostCreate, db: Session = Depends(get_db),
+def create_post(post_create: PostCreate, db: Session = Depends(get_db),
                 current_user: int = Depends(get_current_user)):
-    new_post = Post(user_id=current_user, **post.dict())
+    new_post = Post(user_id=current_user, **post_create.model_dump())
     db.add(new_post)
     db.commit()
     db.refresh(new_post)
