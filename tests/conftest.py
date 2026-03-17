@@ -3,10 +3,15 @@ from fastapi.testclient import TestClient
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 
-from ..app.main import app
-from ..app.database import get_db, Base
-from ..app.oauth2 import create_access_token
-from ..app.schema import Token
+import sys
+import os
+
+sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
+
+from app.main import app
+from app.database import get_db, Base
+from app.oauth2 import create_access_token
+from app.schema import Token
 
 from ..app.models import Post
 
