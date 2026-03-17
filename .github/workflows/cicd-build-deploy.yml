@@ -4,14 +4,11 @@ on: [push, pull_request]
 
 jobs:
   job1:
-    name: Run deploy on ubuntu
+    name: Run on Ubuntu
     runs-on: ubuntu-22.04
     steps:
-      name: pulling git repo
-      uses: actions/checkout@v6
-      run: echo "hello"
-
-
+      - uses: actions/checkout@v5
+      - run: echo "hello"
 
 
 
