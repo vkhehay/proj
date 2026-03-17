@@ -2,6 +2,5 @@ __pycache__
 venv
 .env
 docker-compose.yml
-tests
 db_override.py
 .gitignore
