@@ -7,9 +7,9 @@ jobs:
     name: Run deploy on ubuntu
     runs-on: ubuntu-22.04
     steps:
-      - name: pulling git repo
-      - uses: actions/checkout@v6
-      - run: echo "hello"
+      name: pulling git repo
+      uses: actions/checkout@v6
+      run: echo "hello"
 
 
 
