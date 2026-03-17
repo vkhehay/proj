@@ -1,23 +1,14 @@
 name: Build and Deploy code
 
-on: [push, pull_request] # run action on every push and pull requests
-#  push: # run on push
-#    branches: # run only in specified branch(ies)
-#      - "main" # run when push in main branch
-#      - "proj-working" # or run when push in proj-working branch
-#  pull_request: # run on pull_request
-#    branches: # run in specified branch(ies)
-#      - "test-branch" # run when pull in test-branch
-#
+on: [push, pull_request]
 
 jobs:
   job1:
     name: Run deploy on ubuntu
-    runs-on: ubuntu-22.04 # specify OS for running machine.
-
-    steps: #
+    runs-on: ubuntu-22.04
+    steps:
       - name: pulling git repo
-      - uses: actions/checkout@v6 # import image checkout v.6 from github repo.
+      - uses: actions/checkout@v6
       - run: echo "hello"
 
 
@@ -26,7 +17,14 @@ jobs:
 
 #name: GitHub Actions Demo
 #run-name: ${{ github.actor }} is testing out GitHub Actions 🚀
-#on: [push]
+#on: [push] # run action on every push and pull requests
+#  push: # run on push
+#    branches: # run only in specified branch(ies)
+#      - "main" # run when push in main branch
+#      - "proj-working" # or run when push in proj-working branch
+#  pull_request: # run on pull_request
+#    branches: # run in specified branch(ies)
+#      - "test-branch" # run when pull in test-branch
 #jobs:
 #  Explore-GitHub-Actions:
 #    runs-on: ubuntu-latest
