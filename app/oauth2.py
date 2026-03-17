@@ -1,6 +1,5 @@
 import jwt
-# from jwt.exceptions import InvalidTokenError
-from jwt import PyJWTError
+from jwt.exceptions import InvalidTokenError
 from datetime import timedelta, datetime, timezone
 from fastapi import HTTPException, Depends, status
 from fastapi.security import OAuth2PasswordBearer
@@ -32,7 +31,7 @@ def verify_access_token(token: str, credentials_exception):
         if user_id is None:
             raise credentials_exception
         token_data = TokenData(id=user_id)
-    except PyJWTError:
+    except InvalidTokenError:
         raise credentials_exception
     return token_data
 
