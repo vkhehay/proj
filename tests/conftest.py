@@ -2,27 +2,24 @@ import pytest
 from fastapi.testclient import TestClient
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
-
-from ..app import main, database, oauth2, schema, models
+from ..app import main, oauth2, schema, models
+from ..app import main, models
+from ..app.database import get_db
+from ..app.oauth2 import create_access_token
+from ..app.schema import Token
+from ..app.models import Post
 
 app = main.app
-get_db = database.get_db
-Base = database.Base
-create_access_token = oauth2.create_access_token
-Token = schema.Token
-Post = models.Post
 
+TEST_DATABASE_URL = "postgresql://postgres:1234@localhost:5432/fastapi_test"
+test_engine = create_engine(TEST_DATABASE_URL)
+TestSessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=test_engine)
 
-DATABASE_URL = "postgresql://postgres:1234@localhost:5432/fastapi_test"
-engine = create_engine(DATABASE_URL)
-TestingSessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
-
-
-@pytest.fixture  # (scope = "function"/"module"/"session") --> fixture running frequency
-def session():  # session.query(models.Post)...
-    Base.metadata.drop_all(bind=engine)
-    Base.metadata.create_all(bind=engine)
-    db = TestingSessionLocal()
+@pytest.fixture()
+def session():
+    models.Base.metadata.drop_all(bind=test_engine)
+    models.Base.metadata.create_all(bind=test_engine)
+    db = TestSessionLocal()
     try:
         yield db
     finally:
@@ -32,13 +29,9 @@ def session():  # session.query(models.Post)...
 @pytest.fixture
 def client(session):
     def override_get_db():
-        try:
-            yield session
-        finally:
-            session.close()
-
+        yield session
     app.dependency_overrides[get_db] = override_get_db
-    yield TestClient(app)
+    return TestClient(app)
 
 
 @pytest.fixture

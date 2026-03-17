@@ -9,15 +9,16 @@ import os
 
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 
-from app.models import Base
-from app.config import settings
+from app import models, config
+# from app.config import settings
 
+Base = models.Base
+settings = config.settings
 
 # this is the Alembic Config object, which provides
 # access to the values within the .ini file in use.
 config = context.config
-config.set_main_option(
-    "sqlalchemy.url", f'postgresql+psycopg2://{settings.db_username}:{settings.db_password}@{settings.db_host}:{settings.db_port}/{settings.db_name}')
+config.set_main_option("sqlalchemy.url", f'postgresql+psycopg2://{settings.db_username}:{settings.db_password}@{settings.db_host}:{settings.db_port}/{settings.db_name}')
 
 
 # Interpret the config file for Python logging.

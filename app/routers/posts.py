@@ -2,15 +2,11 @@ from fastapi import status, HTTPException, Depends, APIRouter
 from typing import List, Optional
 from sqlalchemy.orm import Session
 from sqlalchemy import func
-from .. import models, database, schema, oauth2
+from ..models import Post, Vote
+from ..database import get_db
+from ..schema import PostCreate, PostVote, PostResponse
+from ..oauth2 import get_current_user
 
-Post = models.Post
-Vote = models.Vote
-get_db = database.get_db
-PostCreate = schema.PostCreate
-PostResponse = schema.PostResponse
-PostVote = schema.PostVote
-get_current_user = oauth2.get_current_user
 
 router = APIRouter(
     prefix="/posts",

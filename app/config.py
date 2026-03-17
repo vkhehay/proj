@@ -1,10 +1,6 @@
-# import os
-# from pathlib import Path
+import os
 from pydantic_settings import BaseSettings, SettingsConfigDict
 
-
-# BASE_DIR = Path(__file__).resolve().parent.parent  # корень проекта
-# ENV_PATH = BASE_DIR / ".env"
 
 class Settings(BaseSettings):
     db_port: int
@@ -20,8 +16,10 @@ class Settings(BaseSettings):
     postgres_password: str
     postgres_db: str
 
-    model_config = SettingsConfigDict(env_file=".env")
-    # model_config = SettingsConfigDict(env_file=str(ENV_PATH))
+    # env_file: str = ".env" if os.getenv("ENV") != "test" else ".env.test"
+    env_file: str = '.env'
+
+    model_config = SettingsConfigDict(env_file=env_file)
 
 
 settings = Settings()

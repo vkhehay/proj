@@ -2,11 +2,12 @@ import uvicorn
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
-# from ..app import models
-# from ..app.database import engine
-from ..app.routers import posts, auth, votes, users
+from .models import Base
+from .database import engine
+from .routers import posts, auth, votes, users
 
-# models.Base.metadata.create_all(bind=engine)
+
+Base.metadata.create_all(bind=engine)
 
 app = FastAPI()
 
@@ -19,6 +20,7 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
+
 
 app.include_router(auth.router)
 app.include_router(posts.router)

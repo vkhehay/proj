@@ -1,5 +1,5 @@
 import jwt
-from jwt.exceptions import InvalidTokenError
+from jwt import InvalidTokenError
 from datetime import timedelta, datetime, timezone
 from fastapi import HTTPException, Depends, status
 from fastapi.security import OAuth2PasswordBearer

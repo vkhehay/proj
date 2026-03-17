@@ -8,9 +8,9 @@ from ..app.config import settings
 
 
 def test_create_user(client):
-    res = client.post('/users/', json={"name": "John", "email": "user@example.com", "password": "pass"})
+    res = client.post('/users/', json={"name": "John", "email": "email@i.ua", "password": "pass"})
     user = UserResponse(**res.json())
-    assert user.email == "user@example.com"
+    assert user.email == "email@i.ua"
     assert res.status_code == 201
 
 
