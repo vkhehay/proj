@@ -2,9 +2,9 @@ import uvicorn
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
-from proj.app import models
-from proj.app.database import engine
-from proj.app.routers import posts, auth, votes, users
+# from ..app import models
+# from ..app.database import engine
+from ..app.routers import posts, auth, votes, users
 
 # models.Base.metadata.create_all(bind=engine)
 
