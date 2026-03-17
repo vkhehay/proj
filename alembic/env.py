@@ -7,10 +7,10 @@ from alembic import context
 import sys
 import os
 
-# sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
+sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 
-from ..app.models import Base
-from ..app.config import settings
+from app.models import Base
+from app.config import settings
 
 
 # this is the Alembic Config object, which provides
