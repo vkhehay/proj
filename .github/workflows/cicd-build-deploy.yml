@@ -17,7 +17,7 @@ jobs:
 
     steps: #
       - name: pulling git repo
-      - users: actions/checkout@v6 # import image checkout v.6 from github repo.
+      - uses: actions/checkout@v6 # import image checkout v.6 from github repo.
       - run: echo "hello"
 
 
