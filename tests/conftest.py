@@ -3,17 +3,15 @@ from fastapi.testclient import TestClient
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 
-import sys
-import os
+from ..app import main, database, oauth2, schema, models
 
-sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
+app = main.app
+get_db = database.get_db
+Base = database.Base
+create_access_token = oauth2.create_access_token
+Token = schema.Token
+Post = models.Post
 
-from app.main import app
-from app.database import get_db, Base
-from app.oauth2 import create_access_token
-from app.schema import Token
-
-from ..app.models import Post
 
 DATABASE_URL = "postgresql://postgres:1234@localhost:5432/fastapi_test"
 engine = create_engine(DATABASE_URL)
