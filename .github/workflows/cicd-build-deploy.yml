@@ -88,9 +88,9 @@ jobs:
           password: ${{ secrets.PASSWORD }}
 #          port: $secrets.PORT
           script: |
-            cd proj/src
-            git clone https://github.com/vkhehay/proj.git 
-            echo $PASSWORD | sudo -S systemctl restart api
+            cd proj/src 
+            git clone https://github.com/vkhehay/proj.git . 
+            echo ${{ secrets.PASSWORD }} | sudo -S systemctl restart api
 
 #name: GitHub Actions Demo
 #run-name: ${{ github.actor }} is testing out GitHub Actions 🚀
