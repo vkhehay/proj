@@ -6,8 +6,8 @@ jobs:
   job1:
     name: Run on Ubuntu
     runs-on: ubuntu-22.04
-    environment:
-      name: ENV
+#    environment:
+#      name: ENV
     env:
       DB_PORT: ${{secrets.DB_PORT}}
       DB_NAME: ${{secrets.DB_NAME}}
@@ -27,7 +27,7 @@ jobs:
           - 5432:5432
         env:
           POSTGRES_USER: postgres # необходимо явно прописывать юзер, пароль и дб
-          POSTGRES_PASSWORD: $DB_PASSWORD # через переменную POSTGRES_PASSWORD падает pytest
+          POSTGRES_PASSWORD: $POSTGRES_PASSWORD # переменные на github actions не работают.
           POSTGRES_DB: fastapi_test # запуск через переменную $POSTGRES_DB pytest упал с ошибкой
         options: >-
           --health-cmd="pg_isready -U $POSTGRES_USER"
