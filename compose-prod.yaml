@@ -24,6 +24,7 @@ services:
       image: postgres:16 #download postgres 16 image from dockerhub
       container_name: prod_db
       environment:
+        - POSTGRES_USER=${DB_USERNAME}
         - POSTGRES_PASSWORD=${DB_PASSWORD}
         - POSTGRES_DB=${DB_NAME}
       volumes:
