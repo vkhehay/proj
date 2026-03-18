@@ -25,7 +25,7 @@ jobs:
         env:
           POSTGRES_USER: postgres
           POSTGRES_PASSWORD: 1234
-          POSTGRES_DB: fastapi
+          POSTGRES_DB: fastapi_test
         options: >-
           --health-cmd="pg_isready -U $DB_USERNAME"
           --health-interval=10s
