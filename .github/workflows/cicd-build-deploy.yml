@@ -23,8 +23,6 @@ jobs:
         image: postgres:16
         ports:
           - 5432:5432
-        environment:
-          name: GLOBAL
         env:
           POSTGRES_USER: ${{vars.POSTGRES_USER}}
           POSTGRES_PASSWORD: ${{vars.POSTGRES_PASSWORD}}
