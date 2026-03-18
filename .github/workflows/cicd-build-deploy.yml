@@ -1,12 +1,6 @@
 name: Build and Deploy code
 
 on: [push, pull_request]
-env:
-  POSTGRES_USER: ${{ vars.POSTGRES_USER }}
-  POSTGRES_PASSWORD: ${{ vars.POSTGRES_PASSWORD }}
-  POSTGRES_DB: ${{ vars.POSTGRES_DB }}
-
-
 
 jobs:
   job1:
@@ -23,18 +17,18 @@ jobs:
       ALGORITHM: ${{secrets.ALGORITHM}}
       ACCESS_TOKEN_EXP_MIN: ${{secrets.ACCESS_TOKEN_EXP_MIN}}
       DB_HOST: ${{secrets.DB_HOST}}
-#      POSTGRES_USER: ${{vars.POSTGRES_USER}}
-#      POSTGRES_PASSWORD: ${{vars.POSTGRES_PASSWORD}}
-#      POSTGRES_DB: ${{vars.POSTGRES_DB}}
+
     services:
       postgres:
         image: postgres:16
         ports:
           - 5432:5432
+        environment:
+          name: GLOBAL
         env:
-          POSTGRES_USER: $POSTGRES_USER # необходимо явно прописывать юзер, пароль и дб
-          POSTGRES_PASSWORD: $POSTGRES_PASSWORD # переменные на github actions не работают.
-          POSTGRES_DB: $POSTGRES_DB # запуск через переменную $POSTGRES_DB pytest упал с ошибкой
+          POSTGRES_USER: ${{vars.POSTGRES_USER}}
+          POSTGRES_PASSWORD: ${{vars.POSTGRES_PASSWORD}}
+          POSTGRES_DB: ${{vars.POSTGRES_DB}}
         options: >-
           --health-cmd="pg_isready -U $POSTGRES_USER"
           --health-interval=10s
