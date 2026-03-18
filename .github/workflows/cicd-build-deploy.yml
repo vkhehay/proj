@@ -23,9 +23,9 @@ jobs:
         ports:
           - 5432:5432
         env:
-          POSTGRES_USER: $DB_USERNAME
-          POSTGRES_PASSWORD: $DB_PASSWORD
-          POSTGRES_DB: $DB_NAME
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: 1234
+          POSTGRES_DB: fastapi
         options: >-
           --health-cmd="pg_isready -U $DB_USERNAME"
           --health-interval=10s
