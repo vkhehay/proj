@@ -17,6 +17,9 @@ jobs:
       ALGORITHM: ${{secrets.ALGORITHM}}
       ACCESS_TOKEN_EXP_MIN: ${{secrets.ACCESS_TOKEN_EXP_MIN}}
       DB_HOST: ${{secrets.DB_HOST}}
+      POSTGRES_USER: ${{var.POSTGRES_USER}}
+      POSTGRES_PASSWORD: ${{POSTGRES_PASSWORD}}
+      POSTGRES_DB: ${{POSTGRES_DB}}
     services:
       postgres:
         image: postgres:16

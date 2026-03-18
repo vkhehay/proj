@@ -13,9 +13,9 @@ class Settings(BaseSettings):
     access_token_exp_min: int = Field(..., env="ACCESS_TOKEN_EXP_MIN")
     db_host: str = Field(..., env="DB_HOST")
 
-    # postgres_user: str = Field(..., env="POSTGRES_USER")
-    # postgres_password: str = Field(..., env="POSTGRES_PASSWORD")
-    # postgres_db: str = Field(..., env="POSTGRES_DB")
+    postgres_user: str = Field(..., env="POSTGRES_USER")
+    postgres_password: str = Field(..., env="POSTGRES_PASSWORD")
+    postgres_db: str = Field(..., env="POSTGRES_DB")
 
     model_config = SettingsConfigDict(env_file=".env")
 
