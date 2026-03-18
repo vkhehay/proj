@@ -83,9 +83,9 @@ jobs:
       - name: deploying to ubuntu server
         uses: appleboy/ssh-action@v1
         with:
-          host: 134.122.84.85
-          username: vkhehay
-          password: $PASSWORD
+          host: ${{ secrets.HOST }}
+          username: ${{ secrets.USERNAME }}
+          password: ${{ secrets.PASSWORD }}
 #          port: $secrets.PORT
           script: |
             cd proj/src
