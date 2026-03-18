@@ -30,7 +30,7 @@ app.include_router(votes.router)
 
 @app.get('/')
 def root():
-    return {"message": "Hello"}
+    return {"message": "Hello, pushing to ubuntu"}
 
 
 if __name__ == '__main__':

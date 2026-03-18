@@ -10,14 +10,14 @@ jobs:
     environment:
       name: ENV
     env:
-      DB_PORT: ${{secrets.DB_PORT}}
-      DB_NAME: ${{secrets.DB_NAME}}
-      DB_PASSWORD: ${{secrets.DB_PASSWORD}}
-      DB_USERNAME: ${{secrets.DB_USERNAME}}
-      SECRET_KEY: ${{secrets.SECRET_KEY}}
-      ALGORITHM: ${{secrets.ALGORITHM}}
-      ACCESS_TOKEN_EXP_MIN: ${{secrets.ACCESS_TOKEN_EXP_MIN}}
-      DB_HOST: ${{secrets.DB_HOST}}
+      DB_PORT: ${{ secrets.DB_PORT }}
+      DB_NAME: ${{ secrets.DB_NAME }}
+      DB_PASSWORD: ${{ secrets.DB_PASSWORD }}
+      DB_USERNAME: ${{ secrets.DB_USERNAME }}
+      SECRET_KEY: ${{ secrets.SECRET_KEY }}
+      ALGORITHM: ${{ secrets.ALGORITHM }}
+      ACCESS_TOKEN_EXP_MIN: ${{ secrets.ACCESS_TOKEN_EXP_MIN }}
+      DB_HOST: ${{ secrets.DB_HOST }}
 
     services:
       postgres:
@@ -25,9 +25,9 @@ jobs:
         ports:
           - 5432:5432
         env:
-          POSTGRES_USER: postgres # working if hardcord vars
-          POSTGRES_PASSWORD: 1234 # variables does not load from environments
-          POSTGRES_DB: fastapi_test
+          POSTGRES_USER: $DB_USERNAME # working if hardcord vars
+          POSTGRES_PASSWORD: $DB_PASSWORD # variables does not load from environments
+          POSTGRES_DB: $DB_NAME
         options: >- # here variable #DB_USERNAME is working
           --health-cmd="pg_isready -U SDB_USERNAME" 
           --health-interval=10s 
@@ -69,18 +69,28 @@ jobs:
   deploy: #renamed job2 to deploy
     runs-on: ubuntu-22.04
     needs: [build] # set up queue of jobs before implement deploy
+    environment:
+      name: production
+    env:
+      HOST: ${{ secrets.HOST }}
+      USERNAME: ${{ secrets.USERNAME }}
+      PASSWORD: ${{ secrets.PASSWORD }}
+#      PORT: ${{ secrets.PORT }}
 
     steps:
-      - name: deploying staff
-        run: echo "deploying"
-
-
-
-
-
-
-
-
+      - name: pulling git repo
+        uses: actions/checkout@v4
+      - name: deploying to ubuntu server
+        uses: appleboy/ssh-action@v1
+        with:
+          host: $HOST
+          username: $USERNAME
+          password: $PASSWORD
+#          port: $secrets.PORT
+          script: |
+            cd proj/src
+            git clone https://github.com/vkhehay/proj.git 
+            echo $PASSWORD | sudo -S systemctl restart api
 
 #name: GitHub Actions Demo
 #run-name: ${{ github.actor }} is testing out GitHub Actions 🚀
@@ -96,14 +106,7 @@ jobs:
 #  Explore-GitHub-Actions:
 #    runs-on: ubuntu-latest
 #    steps:
-#      - run: echo "🎉 The job was automatically triggered by a ${{ github.event_name }} event."
-#      - run: echo "🐧 This job is now running on a ${{ runner.os }} server hosted by GitHub!"
 #      - run: echo "🔎 The name of your branch is ${{ github.ref }} and your repository is ${{ github.repository }}."
 #      - name: Check out repository code
 #        uses: actions/checkout@v5
 #      - run: echo "💡 The ${{ github.repository }} repository has been cloned to the runner."
-#      - run: echo "🖥️ The workflow is now ready to test your code on the runner."
-#      - name: List files in the repository
-#        run: |
-#          ls ${{ github.workspace }}
-#      - run: echo "🍏 This job's status is ${{ job.status }}."
