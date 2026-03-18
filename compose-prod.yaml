@@ -1,8 +1,8 @@
 version: "3.12"
 services:
     api:
-#      build: . #take image from local folder
-      image: sloppynetworks/fastapi #download docker image from dockerhub site for example sloppynetworks/fastapi
+      build: . #take image from local folder
+#      image: sloppynetworks/fastapi #download docker image from dockerhub site for example sloppynetworks/fastapi
       container_name: prod_api
       ports:
         - "80:8000"
@@ -10,10 +10,10 @@ services:
 #      env_file:
 #        - ./.env
       environment:
-        - DATABASE_HOSTNAME=${DATABASE_HOSTNAME}
-        - DATABASE_PORT=${DATABASE_PORT}
-        - DATABASE_PASSWORD=${DATABASE_PASSWORD}
-        - DATABASE_NAME=${DATABASE_NAME}
+        - DB_HOSTNAME=${DB_HOSTNAME}
+        - DB_PORT=${DB_PORT}
+        - DB_PASSWORD=${DB_PASSWORD}
+        - DB_NAME=${DB_NAME}
         - SECRET_KEY=${SECRET_KEY}
         - ALGORITHM=${ALGORITHM}
         - ACCESS_TOKEN_EXP_MIN=${ACCESS_TOKEN_EXPIRE-MINUTE}
@@ -24,8 +24,8 @@ services:
       image: postgres:16 #download postgres 16 image from dockerhub
       container_name: prod_db
       environment:
-        - POSTGRES_PASSWORD=${DATABASE_PASSWORD}
-        - POSTGRES_DB=${DATABASE_NAME}
+        - POSTGRES_PASSWORD=${DB_PASSWORD}
+        - POSTGRES_DB=${DB_NAME}
       volumes:
         - postgres_db:/var/lib/postgresql/data
 
