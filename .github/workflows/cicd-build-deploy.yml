@@ -64,7 +64,7 @@ jobs:
 #          tags: ${{ secrets.DOCKER_HUB_USERNAME  }}/proj-vkhehay:latest
 #      - name: Image digest
 #        run: echo ${{steps.docker_build.outputs.digest}}
-      - name: push changes to production
+
 #  job2:
   deploy: #renamed job2 to deploy
     runs-on: ubuntu-22.04
