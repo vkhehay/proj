@@ -1,8 +1,6 @@
 name: Build and Deploy code
 
 on: [push, pull_request]
-environment:
-  name: GLOBAL
 env:
   POSTGRES_USER: ${{ vars.POSTGRES_USER }}
   POSTGRES_PASSWORD: ${{ vars.POSTGRES_PASSWORD }}
