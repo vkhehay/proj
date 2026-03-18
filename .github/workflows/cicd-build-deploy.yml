@@ -16,7 +16,7 @@ jobs:
       SECRET_KEY: ${{secrets.SECRET_KEY}}
       ALGORITHM: ${{secrets.ALGORITHM}}
       ACCESS_TOKEN_EXP_MIN: 30 # pytest упал, потому что pydantic не пропустил
-      DB_HOST: ${{secrets.DB_HOST}}
+      DB_HOST: localhost #  клиент пытается подключиться через сокет, а не по TCP. Нужно явно указать
       POSTGRES_USER: ${{vars.POSTGRES_USER}}
       POSTGRES_PASSWORD: ${{vars.POSTGRES_PASSWORD}}
       POSTGRES_DB: ${{vars.POSTGRES_DB}}
