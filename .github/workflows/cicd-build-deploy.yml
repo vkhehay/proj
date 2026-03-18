@@ -1,25 +1,30 @@
 name: Build and Deploy code
 
 on: [push, pull_request]
+env:
+  POSTGRES_USER: ${{vars.POSTGRES_USER}
+  POSTGRES_PASSWORD: ${{vars.POSTGRES_PASSWORD}}
+  POSTGRES_DB: ${{vars.POSTGRES_DB}}
+
 
 jobs:
   job1:
     name: Run on Ubuntu
     runs-on: ubuntu-22.04
-#    environment:
-#      name: ENV
+    environment:
+      name: ENV
     env:
-      DB_PORT: 5432 # pytest упал, потому что pydantic не пропустил
+      DB_PORT: ${{secrets.DB_PORT}}
       DB_NAME: ${{secrets.DB_NAME}}
       DB_PASSWORD: ${{secrets.DB_PASSWORD}}
       DB_USERNAME: ${{secrets.DB_USERNAME}}
       SECRET_KEY: ${{secrets.SECRET_KEY}}
       ALGORITHM: ${{secrets.ALGORITHM}}
-      ACCESS_TOKEN_EXP_MIN: 30 # pytest упал, потому что pydantic не пропустил
-      DB_HOST: localhost #  клиент пытается подключиться через сокет, а не по TCP. Нужно явно указать
-      POSTGRES_USER: ${{vars.POSTGRES_USER}}
-      POSTGRES_PASSWORD: ${{vars.POSTGRES_PASSWORD}}
-      POSTGRES_DB: ${{vars.POSTGRES_DB}}
+      ACCESS_TOKEN_EXP_MIN: ${{secrets.ACCESS_TOKEN_EXP_MIN}}
+      DB_HOST: ${{secrets.DB_HOST}}
+#      POSTGRES_USER: ${{vars.POSTGRES_USER}}
+#      POSTGRES_PASSWORD: ${{vars.POSTGRES_PASSWORD}}
+#      POSTGRES_DB: ${{vars.POSTGRES_DB}}
     services:
       postgres:
         image: postgres:16
@@ -27,7 +32,7 @@ jobs:
           - 5432:5432
         env:
           POSTGRES_USER: postgres # необходимо явно прописывать юзер, пароль и дб
-          POSTGRES_PASSWORD: $POSTGRES_PASSWORD # переменные на github actions не работают.
+          POSTGRES_PASSWORD: 1234 # переменные на github actions не работают.
           POSTGRES_DB: fastapi_test # запуск через переменную $POSTGRES_DB pytest упал с ошибкой
         options: >-
           --health-cmd="pg_isready -U $POSTGRES_USER"
