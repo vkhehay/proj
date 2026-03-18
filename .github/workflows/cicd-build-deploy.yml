@@ -83,8 +83,8 @@ jobs:
       - name: deploying to ubuntu server
         uses: appleboy/ssh-action@v1
         with:
-          host: $HOST
-          username: $USERNAME
+          host: 134.122.84.85
+          username: vkhehay
           password: $PASSWORD
 #          port: $secrets.PORT
           script: |
