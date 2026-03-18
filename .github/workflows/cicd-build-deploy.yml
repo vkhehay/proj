@@ -9,13 +9,13 @@ jobs:
 #    environment:
 #      name: ENV
     env:
-      DB_PORT: ${{secrets.DB_PORT}}
+      DB_PORT: 5432 # pytest упал, потому что pydantic не пропустил
       DB_NAME: ${{secrets.DB_NAME}}
       DB_PASSWORD: ${{secrets.DB_PASSWORD}}
       DB_USERNAME: ${{secrets.DB_USERNAME}}
       SECRET_KEY: ${{secrets.SECRET_KEY}}
       ALGORITHM: ${{secrets.ALGORITHM}}
-      ACCESS_TOKEN_EXP_MIN: ${{secrets.ACCESS_TOKEN_EXP_MIN}}
+      ACCESS_TOKEN_EXP_MIN: 30 # pytest упал, потому что pydantic не пропустил
       DB_HOST: ${{secrets.DB_HOST}}
       POSTGRES_USER: ${{vars.POSTGRES_USER}}
       POSTGRES_PASSWORD: ${{vars.POSTGRES_PASSWORD}}
