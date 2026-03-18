@@ -25,9 +25,9 @@ jobs:
         ports:
           - 5432:5432
         env:
-          POSTGRES_USER: $DB_USERNAME # working if hardcord vars
-          POSTGRES_PASSWORD: $DB_PASSWORD # variables does not load from environments
-          POSTGRES_DB: $DB_NAME
+          POSTGRES_USER: postgres # working if hardcord vars
+          POSTGRES_PASSWORD: 1234 # variables does not load from environments
+          POSTGRES_DB: fastapi_test
         options: >- # here variable #DB_USERNAME is working
           --health-cmd="pg_isready -U SDB_USERNAME" 
           --health-interval=10s 
