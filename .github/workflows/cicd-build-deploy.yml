@@ -52,26 +52,12 @@ jobs:
           sudo apt-get install -y postgresql-client
           until pg_isready -h localhost -U $DB_USERNAME; do sleep 2; done
           psql -h localhost -U $DB_USERNAME -c "CREATE DATABASE ${DB_NAME}_test;"
-          psql -h localhost -U $DB_USERNAME -l
 
       - name: Run tests with pytest
         env:
-          DB_PORT: ${{ vars.DB_PORT }}
-          DB_NAME: ${{ vars.DB_NAME }}
-          DB_PASSWORD: ${{ vars.DB_PASSWORD }}
-          DB_USERNAME: ${{ vars.DB_USERNAME }}
-          SECRET_KEY: ${{ vars.SECRET_KEY }}
-          ALGORITHM: ${{ vars.ALGORITHM }}
-          ACCESS_TOKEN_EXP_MIN: ${{ vars.ACCESS_TOKEN_EXP_MIN }}
-          DB_HOST: ${{ vars.DB_HOST }}
           PGPASSWORD: ${{ vars.DB_PASSWORD }}
+          PYTEST_RUNNING: "1"   # ← ключевой момент
         run: |
-          echo "DB_NAME=$DB_NAME"
-          echo "DB_HOST=$DB_HOST"
-          echo "DB_USERNAME=$DB_USERNAME"
-          echo "DB_PORT=$DB_PORT"
-          echo "PGPASSWORD=$PGPASSWORD"
-          psql -h localhost -U $DB_USERNAME -l
           pip install pytest
           pytest -v -s
 

@@ -18,13 +18,25 @@ settings = config.settings
 # this is the Alembic Config object, which provides
 # access to the values within the .ini file in use.
 config = context.config
-config.set_main_option("sqlalchemy.url", f'postgresql+psycopg2://{settings.db_username}:{settings.db_password}@{settings.db_host}:{settings.db_port}/{settings.db_name}')
+# config.set_main_option("sqlalchemy.url", f'postgresql+psycopg2://{settings.db_username}:{settings.db_password}@{settings.db_host}:{settings.db_port}/{settings.db_name}')
+# original config.set_main_option
 
+db_name = settings.db_name
+if os.getenv("PYTEST_RUNNING") == "1":   # added for testing on github actions
+    db_name = f"{db_name}_test"
+
+config.set_main_option("sqlalchemy.url", f'postgresql+psycopg2://{settings.db_username}:{settings.db_password}@{settings.db_host}:{settings.db_port}/{db_name}')
+# created for testing config.set_main_option
 
 # Interpret the config file for Python logging.
 # This line sets up loggers basically.
-if config.config_file_name is not None:
+
+# if config.config_file_name is not None: # original if config.config_file
+#     fileConfig(config.config_file_name)
+
+if config.config_file_name is not None: # created for test if config.config_file
     fileConfig(config.config_file_name)
+
 
 # add your model's MetaData object here
 # for 'autogenerate' support
