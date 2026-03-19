@@ -25,10 +25,10 @@ jobs:
         ports:
           - 5432:5432
         env:
-          POSTGRES_USER: ${{ secrets.DB_USERNAME }} # working if hardcord vars
-          POSTGRES_PASSWORD: ${{ secrets.DB_PASSWORD }} # variables does not load from environments
+          POSTGRES_USER: ${{ secrets.DB_USERNAME }}
+          POSTGRES_PASSWORD: ${{ secrets.DB_PASSWORD }}
           POSTGRES_DB: ${{ secrets.DB_NAME }}
-        options: >- # here variable #DB_USERNAME is working
+        options: >- # here var must be $<variable>
           --health-cmd="pg_isready -U SDB_USERNAME" 
           --health-interval=10s 
           --health-timeout=5s
@@ -45,30 +45,30 @@ jobs:
           pip install pytest
           pytest
 
-#      - name: Login to Docker Hub
-#        uses: docker/login-action@v4
-#        with:
-#          username: ${{ secrets.DOCKER_HUB_USERNAME }}
-#          password: ${{ secrets.DOCKER_HUB_ACCESS_TOKEN }}
-#      - name: Set up Docker Buildx
-#        uses: docker/setup-buildx-action@v4
-#        id: buildx
-#      - name: Build and push
-#        id: docker_build
-#        uses: docker/build-push-action@v5
-#        with:
-#          context: ./
-#          file: ./Dockerfile
-#          builder: ${{steps.buildx.outputs.name}}
-#          push: true
-#          tags: ${{ secrets.DOCKER_HUB_USERNAME  }}/proj-vkhehay:latest
-#      - name: Image digest
-#        run: echo ${{steps.docker_build.outputs.digest}}
+      - name: Login to Docker Hub
+        uses: docker/login-action@v4
+        with:
+          username: ${{ secrets.DOCKER_HUB_USERNAME }}
+          password: ${{ secrets.DOCKER_HUB_ACCESS_TOKEN }}
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v4
+        id: buildx
+      - name: Build and push
+        id: docker_build
+        uses: docker/build-push-action@v5
+        with:
+          context: ./
+          file: ./Dockerfile
+          builder: ${{steps.buildx.outputs.name}}
+          push: true
+          tags: ${{ secrets.DOCKER_HUB_USERNAME  }}/proj-vkhehay:latest
+      - name: Image digest
+        run: echo ${{steps.docker_build.outputs.digest}}
 
 #  job2:
   deploy: #renamed job2 to deploy
     runs-on: ubuntu-22.04
-    needs: [build] # set up queue of jobs before implement deploy
+    needs: [build] # set up dependence of jobs before implement deploy
     environment:
       name: production
     env:
@@ -90,7 +90,8 @@ jobs:
           script: |
             cd proj/src 
             git clone https://github.com/vkhehay/proj.git .
-            pip install psycopg2-binary
+            source $HOME/proj/venv/bin/activate
+            pip install -r $HOME/proj/src/requirements.txt
             echo ${{ secrets.PASSWORD }} | sudo -S systemctl restart api
 
 #name: GitHub Actions Demo

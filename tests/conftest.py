@@ -8,10 +8,11 @@ from ..app.database import get_db
 from ..app.oauth2 import create_access_token
 from ..app.schema import Token
 from ..app.models import Post
+from ..app.config import settings
 
 app = main.app
 
-TEST_DATABASE_URL = "postgresql://postgres:1234@localhost:5432/fastapi_test"
+TEST_DATABASE_URL = f'postgresql://{settings.db_username}:{settings.db_password}@{settings.db_host}:{settings.db_port}/{settings.db_name}_test'
 test_engine = create_engine(TEST_DATABASE_URL)
 TestSessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=test_engine)
 
