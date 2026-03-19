@@ -64,13 +64,13 @@ jobs:
           ALGORITHM: ${{ secrets.ALGORITHM }}
           ACCESS_TOKEN_EXP_MIN: ${{ secrets.ACCESS_TOKEN_EXP_MIN }}
           DB_HOST: ${{ secrets.DB_HOST }}
-          PGPASSWORD: ${{ secrets.DB_PASSWORD }}   # ← добавь это
+          PGPASSWORD: ${{ secrets.DB_PASSWORD }}
         run: |
           echo "DB_NAME=$DB_NAME"
           echo "DB_HOST=$DB_HOST"
           echo "DB_USERNAME=$DB_USERNAME"
           echo "DB_PORT=$DB_PORT"
-          echo "PGPASSWORD=$PGPASWORD"
+          echo "PGPASSWORD=$PGPASSWORD"
           psql -h localhost -U $DB_USERNAME -l
           pip install pytest
           pytest -v -s
