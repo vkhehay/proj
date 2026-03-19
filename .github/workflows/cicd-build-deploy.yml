@@ -44,21 +44,13 @@ jobs:
 
       - name: Create test database
         env:
-          DB_USER: ${{ secrets.DB_USERNAME }}
-          DB_NAME: ${{ secrets.DB_NAME }}
           PGPASSWORD: ${{ secrets.DB_PASSWORD }}
         run: |
           sudo apt-get update
           sudo apt-get install -y postgresql-client
-          psql -h localhost -U $DB_USER -c "CREATE DATABASE ${DB_NAME}_test;"
+          psql -h localhost -U postgres -c "CREATE DATABASE fastapi_test;"
 
       - name: Run tests with pytest
-        env:
-          DB_USER: ${{ secrets.DB_USERNAME }}
-          DB_PASSWORD: ${{ secrets.DB_PASSWORD }}
-          DB_NAME: ${{ secrets.DB_NAME }}
-          DB_HOST: localhost
-          DB_PORT: 5432
         run: |
           pip install pytest
           pytest
