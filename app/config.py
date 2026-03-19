@@ -13,9 +13,9 @@ class Settings(BaseSettings):
     access_token_exp_min: int
     db_host: str  # = "db"
 
-    postgres_user: str
-    postgres_password: str
-    postgres_db: str
+    # postgres_user: str
+    # postgres_password: str
+    # postgres_db: str
 
     # class Config:
     #     env_prefix = ""
