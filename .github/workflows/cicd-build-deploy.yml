@@ -60,7 +60,7 @@ jobs:
 
       - name: Run tests with pytest
         env:
-          DB_NAME: ${{ vars.DB_NAME }}
+          DB_NAME: fastapi
           DB_PORT: 5432
           DB_PASSWORD: ${{ vars.DB_PASSWORD }}
           DB_USERNAME: ${{ vars.DB_USERNAME }}
