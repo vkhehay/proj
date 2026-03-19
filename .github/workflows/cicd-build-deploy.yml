@@ -90,6 +90,7 @@ jobs:
           script: |
             cd proj/src 
             git clone https://github.com/vkhehay/proj.git . 
+            pip install -r requirements.txt
             echo ${{ secrets.PASSWORD }} | sudo -S systemctl restart api
 
 #name: GitHub Actions Demo
