@@ -53,13 +53,27 @@ jobs:
           until pg_isready -h localhost -U $DB_USERNAME; do sleep 2; done
           psql -h localhost -U $DB_USERNAME -c "CREATE DATABASE ${DB_NAME}_test;"
 
+      - name: Debug env
+        run: echo "PYTEST_RUNNING=$PYTEST_RUNNING"
+        env:
+          PYTEST_RUNNING: "1"
+
       - name: Run tests with pytest
         env:
+          DB_NAME: fastapi_test
+          DB_PORT: 5432
+          DB_PASSWORD: ${{ vars.DB_PASSWORD }}
+          DB_USERNAME: ${{ vars.DB_USERNAME }}
+          DB_HOST: localhost
+          SECRET_KEY: ${{ vars.SECRET_KEY }}
+          ALGORITHM: ${{ vars.ALGORITHM }}
+          ACCESS_TOKEN_EXP_MIN: ${{ vars.ACCESS_TOKEN_EXP_MIN }}
           PGPASSWORD: ${{ vars.DB_PASSWORD }}
-          PYTEST_RUNNING: "1"   # ← ключевой момент
+          PYTEST_RUNNING: "1"
         run: |
           pip install pytest
           pytest -v -s
+
 
 #
 #      - name: Login to Docker Hub
