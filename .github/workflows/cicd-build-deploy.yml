@@ -46,6 +46,7 @@ jobs:
         env:
           DB_USER: ${{ secrets.DB_USERNAME }}
           DB_NAME: ${{ secrets.DB_NAME }}
+          PGPASSWORD: ${{ secrets.DB_PASSWORD }}
         run: |
           sudo apt-get update
           sudo apt-get install -y postgresql-client
