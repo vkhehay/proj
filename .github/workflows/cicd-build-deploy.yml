@@ -49,7 +49,7 @@ jobs:
         run: |
           sudo apt-get update
           sudo apt-get install -y postgresql-client
-#          until pg_isready -h localhost -U $DB_USERNAME; do sleep 2; done
+          until pg_isready -h localhost -U $DB_USERNAME; do sleep 2; done
           psql -h localhost -U $DB_USERNAME -c "CREATE DATABASE ${DB_NAME}_test;"
 
       - name: Run tests with pytest
