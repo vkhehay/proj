@@ -44,15 +44,15 @@ jobs:
 
       - name: Create test database
         env:
-          DB_USER: ${{ secrets.DB_USERNAME }}
+          DB_USERNAME: ${{ secrets.DB_USERNAME }}
           DB_NAME: ${{ secrets.DB_NAME }}
           PGPASSWORD: ${{ secrets.DB_PASSWORD }}
         run: |
           sudo apt-get update
           sudo apt-get install -y postgresql-client
-          until pg_isready -h localhost -U $DB_USER; do sleep 2; done
-          psql -h localhost -U $DB_USER -c "CREATE DATABASE ${DB_NAME}_test;"
-          psql -h localhost -U $DB_USER -l
+          until pg_isready -h localhost -U $DB_USERNAME; do sleep 2; done
+          psql -h localhost -U $DB_USERNAME -c "CREATE DATABASE ${DB_NAME}_test;"
+          psql -h localhost -U $DB_USERNAME -l
 
 
       - name: Run tests with pytest
